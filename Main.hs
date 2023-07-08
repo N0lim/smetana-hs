@@ -13,8 +13,8 @@ import Data.Maybe
 import Data.Either (fromLeft)
 
 data Smetana = Smetana Step Smetana | End deriving(Show)
-data Step = Step Int Command deriving(Show)
-data Command = Swap Int Int | GoTo Int deriving(Show)
+data Step = Step Int32 Command deriving(Show)
+data Command = Swap Int32 Int32 | GoTo Int32 deriving(Show)
 
 smetanaParser :: ParsecT String u Identity Smetana
 smetanaParser = do
@@ -108,6 +108,8 @@ stepsOutOfBounds smet = if any (isJust . isOutBound) (smetanaToList smet) then m
 
 allChecks :: Smetana -> Validation String Smetana
 allChecks smet = mconcat $ map ($ smet) [isFirstStepIs1, checkOrder, stepsOutOfBounds]
+
+
 
 main :: IO ()
 main = do
