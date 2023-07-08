@@ -98,12 +98,12 @@ stepsOutOfBounds smet = if any (isJust . isOutBound) (smetanaToList smet) then m
     justToFail (Just a) = Failure a
     isOutBound :: Step -> Maybe String
     isOutBound (Step n (Swap a b))
-        | a > len && b > len = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with non existing step ", show b, "\n"]
-        | a > len = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with step ", show b, "\n"]
-        | b > len = Just $ concat ["in step ", show n, " step ", show a, " swapping with non existing step ", show b, "\n"]
+        | (a > len || a < 1) && (b > len || b < 1) = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with non existing step ", show b, "\n"]
+        | a > len || a < 1 = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with step ", show b, "\n"]
+        | b > len || b < 1 = Just $ concat ["in step ", show n, " step ", show a, " swapping with non existing step ", show b, "\n"]
         | otherwise = Nothing
     isOutBound (Step n (GoTo a))
-        | a > len = Just $ concat ["in step ", show n, " go to unexisting step ", show a, "\n"]
+        | a > len || a < 1 = Just $ concat ["in step ", show n, " go to unexisting step ", show a, "\n"]
         | otherwise = Nothing
 
 allChecks :: Smetana -> Validation String Smetana
