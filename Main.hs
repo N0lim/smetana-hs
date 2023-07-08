@@ -11,6 +11,7 @@ import Data.List
 import Data.Validation (Validation (Failure), fromEither, toEither)
 import Data.Maybe
 import Data.Either (fromLeft)
+import Data.Int (Int32)
 
 data Smetana = Smetana Step Smetana | End deriving(Show)
 data Step = Step Int32 Command deriving(Show)
