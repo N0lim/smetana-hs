@@ -19,4 +19,4 @@ main = do
             Left err -> putStr err
             Right val -> putStr $ smetanaToCPP val
 
-test = "Step 042. Go to step 1.\nStep 1. Swap step 2 with step 1.\nStep 2. Go to step 1."
+test = "Step 0. Go to step 1.\nStep 1. Swap step 2 with step 1.\nStep 2. Go to step 1."

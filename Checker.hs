@@ -41,7 +41,7 @@ checkOrder smet = case isSmetanaOrdered smet of
     ns -> fromEither $ Left $ intercalate "\n" (map (\n -> concat ["after step ", show n, " should be step ", show (n + 1)]) ns) ++ "\n"
 
 isFirstStepIs0 :: Smetana -> Validation String Smetana
-isFirstStepIs0 smet = if 0 == head (smetanaStepsToInts smet) then pure smet else fromEither $ Left "program should start from step 1\n"
+isFirstStepIs0 smet = if 0 == head (smetanaStepsToInts smet) then pure smet else fromEither $ Left "program should start from step 0\n"
 
 stepsOutOfBounds :: Smetana -> Validation String Smetana
 stepsOutOfBounds smet = if any (isJust . isOutBound) (smetanaToList smet) then mconcat $ map justToFail {-$ intersperse (Just "\n")-} $ filter isJust $ map isOutBound $ smetanaToList smet else pure smet where

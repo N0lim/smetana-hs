@@ -17,9 +17,9 @@ commandToCPP (GoTo a) = concat ["{1, ", show a, ", 0}"]
 commandToCPP (Swap a b) = concat ["{2, ", show a ,", ", show b, "}"]
 
 smetanaToCPP :: Smetana -> String
-smetanaToCPP smet = concat ["const int n = ", show . length . smetanaToList $ smet,";\n\ncommand smetana[n] = {", recur smet, "};\n\n", post] where
+smetanaToCPP smet = concat [preambule, "const int n = ", show . length . smetanaToList $ smet,";\n\ncommand smetana[n] = {", recur smet, "};\n\n", post] where
     recur :: Smetana -> String
-    recur (Smetana (Step n v) xs) = concat [commandToCPP v, ", ", smetanaToCPP xs]
+    recur (Smetana (Step n v) xs) = concat [commandToCPP v, ", ", recur xs]
     recur End = "{0, 0, 0}"
 
 {-
