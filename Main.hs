@@ -5,8 +5,9 @@ module Main where
 import AST
 import Parser
 import Checker
+import CodeGen
 import Data.Either (fromLeft)
-import Data.Validation (toEither)
+import Data.Validation
 import Text.Parsec (parse)
 
 
@@ -14,6 +15,8 @@ main :: IO ()
 main = do
     case parse smetanaParser "" test of
         Left err -> print err
-        Right xs -> putStr $ fromLeft "WTF all OK" $ toEither $ allChecks xs
+        Right xs -> case toEither $ allChecks xs of
+            Left err -> putStr err
+            Right val -> putStr $ smetanaToCPP val
 
-test = "Step 141. Go to step 3.\nStep 4. Swap step 4 with step 22.\nStep 3. Go to step 5."
+test = "Step 042. Go to step 1.\nStep 1. Swap step 2 with step 1.\nStep 2. Go to step 1."
