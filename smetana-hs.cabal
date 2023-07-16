@@ -28,5 +28,6 @@ executable smetana-hs
   build-depends:       base >=4.14 && <5
                       , parsec
                       , validation
+                      , process
   -- hs-source-dirs:
   default-language:    Haskell2010

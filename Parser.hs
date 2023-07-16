@@ -4,7 +4,7 @@ import AST
 import Data.Functor.Identity(Identity)
 import Text.Parsec
 
-smetanaParser :: ParsecT String u Identity Smetana
+smetanaParser :: Parsec String u Smetana
 smetanaParser = do
     value <- stepParser
     next <- (char '\n' >> smetanaParser) <|> (eof >> return End)
