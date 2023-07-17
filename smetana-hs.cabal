@@ -4,11 +4,11 @@ cabal-version:       >=1.10
 -- http://haskell.org/cabal/users-guide/
 
 name:                smetana-hs
-version:             0.1.0.0
+version:             1.0.0.0
 synopsis:            implementation of SMETANA in Haskell
 -- description:
 -- bug-reports:
-license:             AGPL-3
+license:             AGPL-3.0-or-later
 license-file:        LICENSE
 author:              N0lim
 maintainer:          0s7n888884@gmail.com
