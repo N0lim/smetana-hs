@@ -45,17 +45,17 @@ isFirstStepIs0 smet = if 0 == head (smetanaStepsToInts smet) then pure smet else
 
 stepsOutOfBounds :: Smetana -> Validation String Smetana
 stepsOutOfBounds smet = if any (isJust . isOutBound) (smetanaToList smet) then mconcat $ map justToFail {-$ intersperse (Just "\n")-} $ filter isJust $ map isOutBound $ smetanaToList smet else pure smet where
-    len = length (smetanaToList smet)
+    len = length (smetanaToList smet) - 1
     justToFail :: Maybe String -> Validation String Smetana
     justToFail (Just a) = Failure a
     isOutBound :: Step -> Maybe String
     isOutBound (Step n (Swap a b))
-        | (a > len || a < 1) && (b > len || b < 1) = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with non existing step ", show b, "\n"]
-        | a > len || a < 1 = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with step ", show b, "\n"]
-        | b > len || b < 1 = Just $ concat ["in step ", show n, " step ", show a, " swapping with non existing step ", show b, "\n"]
+        | (a > len || a < 0) && (b > len || b < 0) = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with non existing step ", show b, "\n"]
+        | a > len || a < 0 = Just $ concat ["in step ", show n, " non existing step ", show a, " swapping with step ", show b, "\n"]
+        | b > len || b < 0 = Just $ concat ["in step ", show n, " step ", show a, " swapping with non existing step ", show b, "\n"]
         | otherwise = Nothing
     isOutBound (Step n (GoTo a))
-        | a > len || a < 1 = Just $ concat ["in step ", show n, " go to unexisting step ", show a, "\n"]
+        | a > len || a < 0 = Just $ concat ["in step ", show n, " go to unexisting step ", show a, "\n"]
         | otherwise = Nothing
 
 allChecks :: Smetana -> Validation String Smetana

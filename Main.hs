@@ -33,17 +33,17 @@ flagParser = do
 
 inputParse :: Parsec String u (FilePath, [String])
 inputParse = do
-    file <- many anyChar
+    file <- many (noneOf ".")
     char '.'
     string "smetana"
-    skipMany1 space
+    spaces
     flags <- sepEndBy flagParser (skipMany1 space)
     return (file, flags)
 
 writeTo :: Flags -> FilePath -> String -> IO ()
 writeTo flags path str = case out flags of
-    ToC -> writeFile (path ++ ".c") str
-    ToO -> writeFile (path ++ ".c") str >> callProcess "gcc" [concat ["-o ", path, ".c ", path, ".out"]]
+    ToC -> writeFile (path ++ ".cpp") str
+    ToO -> writeFile (path ++ ".cpp") str >> callProcess "gcc" [path ++ ".cpp", "-o", path ++ ".out"]
 
 parseAndCompileFile :: FilePath -> Flags -> IO ()
 parseAndCompileFile path flags = do
